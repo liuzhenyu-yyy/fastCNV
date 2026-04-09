@@ -42,9 +42,9 @@ plotCNVTree <- function(tree_data, clone_cols = NULL) {
                                          order(as.numeric(sub(".* (\\d+)$", "\\1", tree_data$label[tree_data$isTip])))
                                        ])),size = 4)
 
-    if(length(clone_cols) == sum(tree_data$isTip)) {
+    if(length(clone_cols) >= sum(tree_data$isTip)) {
       tree_plot <- tree_plot +
-        scale_color_manual(values = clone_cols)
+        scale_color_manual(values = clone_cols[1:sum(tree_data$isTip)])
     }
 
   }
