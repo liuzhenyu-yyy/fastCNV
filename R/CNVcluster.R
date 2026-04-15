@@ -80,7 +80,8 @@ CNVCluster <- function(seuratObj,
     }
 
     if (kDetection == "automatic") {
-      k_values <- 1:8
+      k_max <- min(15, length(hc$order) - 1)
+      k_values <- 1:k_max
       wss <- sapply(k_values, function(k) {
         clusters <- cutree(hc, k = k)
         sum(sapply(unique(clusters), function(cl) {
