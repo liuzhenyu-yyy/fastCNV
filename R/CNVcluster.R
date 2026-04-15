@@ -79,15 +79,16 @@ CNVCluster <- function(seuratObj,
       return(x[elbow_point + 1])
     }
 
-    k_values <- 1:15
-    wss <- sapply(k_values, function(k) {
-      clusters <- cutree(hc, k = k)
-      sum(sapply(unique(clusters), function(cl) {
-        sum(dist_matrix_full[which(clusters == cl), which(clusters == cl)]^2) / (2 * sum(clusters == cl))
-      }))
-    })
-
-    if(kDetection == "automatic") {k <- find_elbow(k_values, wss)}
+    if (kDetection == "automatic") {
+      k_values <- 1:15
+      wss <- sapply(k_values, function(k) {
+        clusters <- cutree(hc, k = k)
+        sum(sapply(unique(clusters), function(cl) {
+          sum(dist_matrix_full[which(clusters == cl), which(clusters == cl)]^2) / (2 * sum(clusters == cl))
+        }))
+      })
+      k <- find_elbow(k_values, wss)
+    }
 
     clusters <- cutree(hc, k = k, h = h)
 
