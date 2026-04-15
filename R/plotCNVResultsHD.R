@@ -112,7 +112,11 @@ plotCNVResultsHD <- function(seuratObjHD,
   if (!is.null(referenceVar)) {
     annotation_df <- suppressWarnings(as.data.frame(Seurat::FetchData(seuratObjHD, vars = referenceVar)))
     colnames(annotation_df) <- "Annotations"
-    annot_colors <- setNames(referencePalette[1:length(unique(annotation_df$Annotations))], unique(annotation_df$Annotations))
+    if (is.null(names(referencePalette))) {
+      annot_colors <- setNames(referencePalette[1:length(unique(annotation_df$Annotations))], unique(annotation_df$Annotations))
+    } else {
+      annot_colors <- referencePalette
+    }
     if (!is.null(splitPlotOnVar)) {
       split_df <- suppressWarnings(as.data.frame(Seurat::FetchData(seuratObjHD, vars = splitPlotOnVar)))
       colnames(split_df) <- "Split"
